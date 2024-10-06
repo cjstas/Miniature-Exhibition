@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://c0r0t0fyc3rim"]
+
+[ext_resource type="Script" path="res://src/Creatures/bubble_gum_star.gd" id="1_daldb"]
+[ext_resource type="Texture2D" uid="uid://cdc28p56jlsre" path="res://assets/creatures/bubblegumStar/bubblegumStar-icon.png" id="1_mw8f8"]
+
+[node name="BubbleGumStar" type="Button"]
+icon = ExtResource("1_mw8f8")
+script = ExtResource("1_daldb")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

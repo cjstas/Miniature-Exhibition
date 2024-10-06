@@ -1,0 +1,13 @@
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://c1o0775c62lgb"]
+
+[ext_resource type="StyleBox" uid="uid://dwxnrx8oxow1c" path="res://src/Player/RoundedBox_DarkGreen.tres" id="1_6d7ew"]
+[ext_resource type="StyleBox" uid="uid://d3d5mnwxk47jw" path="res://src/Player/RoundedBox_Green.tres" id="1_bku5q"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o0jrg"]
+
+[resource]
+Button/styles/focus = SubResource("StyleBoxEmpty_o0jrg")
+Button/styles/hover = ExtResource("1_bku5q")
+Button/styles/normal = ExtResource("1_bku5q")
+Button/styles/pressed = ExtResource("1_6d7ew")
+Panel/styles/panel = ExtResource("1_bku5q")

@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://brn822hddlebl"]
+
+[ext_resource type="Texture2D" uid="uid://cunym73aht3rt" path="res://assets/grid/cage.png" id="1_2vmi5"]
+[ext_resource type="Script" path="res://src/testbox.gd" id="1_kwryr"]
+
+[node name="Testbox" type="Sprite2D"]
+z_index = 20
+texture = ExtResource("1_2vmi5")
+script = ExtResource("1_kwryr")

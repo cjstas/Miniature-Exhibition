@@ -1,0 +1,101 @@
+[gd_scene load_steps=11 format=3 uid="uid://d76rsvcv2tws"]
+
+[ext_resource type="Script" path="res://src/Player/shop.gd" id="1_hqqkj"]
+[ext_resource type="Theme" uid="uid://c1o0775c62lgb" path="res://src/Player/PopupPanel.tres" id="2_euqna"]
+[ext_resource type="Texture2D" uid="uid://dqphob3o0vmq5" path="res://assets/Player/dropup.png" id="3_8weer"]
+[ext_resource type="Texture2D" uid="uid://cdc28p56jlsre" path="res://assets/creatures/bubblegumStar/bubblegumStar-icon.png" id="3_epwa5"]
+[ext_resource type="Theme" uid="uid://bhr8w3fiojlbp" path="res://src/Player/Blank_buttons.tres" id="3_st5go"]
+[ext_resource type="Texture2D" uid="uid://dbpwgnxp0xdbj" path="res://assets/Player/dropdown.png" id="4_b1wje"]
+[ext_resource type="Texture2D" uid="uid://dnuv3k3i3n8ev" path="res://assets/creatures/resource_basic.png" id="5_p0nr0"]
+
+[sub_resource type="Theme" id="Theme_1uid6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_734gv"]
+
+[sub_resource type="Theme" id="Theme_oepgj"]
+CheckButton/colors/font_outline_color = Color(0, 0, 0, 0)
+CheckButton/icons/checked = ExtResource("3_8weer")
+CheckButton/icons/unchecked = ExtResource("4_b1wje")
+CheckButton/styles/focus = SubResource("StyleBoxEmpty_734gv")
+
+[node name="Shop" type="AspectRatioContainer"]
+anchors_preset = -1
+anchor_right = 0.331
+anchor_bottom = 0.5
+offset_right = 0.23996
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.0
+script = ExtResource("1_hqqkj")
+
+[node name="ExpandedPanel" type="Panel" parent="."]
+visible = false
+layout_mode = 2
+theme = ExtResource("2_euqna")
+
+[node name="Rows" type="VBoxContainer" parent="ExpandedPanel"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 37.0
+offset_right = 260.0
+offset_bottom = 261.0
+theme = SubResource("Theme_1uid6")
+
+[node name="BasicCreature" type="HSplitContainer" parent="ExpandedPanel/Rows"]
+layout_mode = 2
+
+[node name="Info" type="Button" parent="ExpandedPanel/Rows/BasicCreature"]
+layout_mode = 2
+theme = ExtResource("3_st5go")
+icon = ExtResource("3_epwa5")
+
+[node name="HSplitContainer" type="HSplitContainer" parent="ExpandedPanel/Rows/BasicCreature"]
+layout_mode = 2
+
+[node name="BuyBasic" type="Button" parent="ExpandedPanel/Rows/BasicCreature/HSplitContainer"]
+layout_mode = 2
+text = "Buy"
+
+[node name="HSplitContainer" type="HSplitContainer" parent="ExpandedPanel/Rows/BasicCreature/HSplitContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="ExpandedPanel/Rows/BasicCreature/HSplitContainer/HSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+texture = ExtResource("5_p0nr0")
+
+[node name="Label" type="Label" parent="ExpandedPanel/Rows/BasicCreature/HSplitContainer/HSplitContainer"]
+layout_mode = 2
+text = "x2"
+
+[node name="AdvancedCreature" type="HSplitContainer" parent="ExpandedPanel/Rows"]
+visible = false
+layout_mode = 2
+
+[node name="Info" type="Button" parent="ExpandedPanel/Rows/AdvancedCreature"]
+layout_mode = 2
+theme = ExtResource("3_st5go")
+icon = ExtResource("3_epwa5")
+
+[node name="BuyAdvanced" type="Button" parent="ExpandedPanel/Rows/AdvancedCreature"]
+layout_mode = 2
+text = "Buy
+"
+
+[node name="CollapsedPanel" type="Panel" parent="."]
+custom_minimum_size = Vector2(0, 40)
+layout_direction = 2
+layout_mode = 2
+size_flags_vertical = 0
+theme = ExtResource("2_euqna")
+
+[node name="CheckButton" type="CheckButton" parent="."]
+layout_mode = 2
+size_flags_vertical = 0
+theme = SubResource("Theme_oepgj")
+text = "Shop
+"
+
+[connection signal="pressed" from="ExpandedPanel/Rows/BasicCreature/Info" to="." method="_on_info_basic_pressed"]
+[connection signal="pressed" from="ExpandedPanel/Rows/BasicCreature/HSplitContainer/BuyBasic" to="." method="_on_buy_basic_pressed"]
+[connection signal="toggled" from="CheckButton" to="." method="_on_check_button_toggled"]

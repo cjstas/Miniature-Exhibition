@@ -1,0 +1,36 @@
+[gd_scene load_steps=4 format=3 uid="uid://d17ejb8337l3c"]
+
+[ext_resource type="Theme" uid="uid://c1o0775c62lgb" path="res://src/Player/PopupPanel.tres" id="2_idhwn"]
+[ext_resource type="PackedScene" uid="uid://n4pesnct3co0" path="res://src/Player/Inventory.tscn" id="2_rx0p8"]
+[ext_resource type="PackedScene" uid="uid://d76rsvcv2tws" path="res://src/Player/Shop.tscn" id="3_53cv6"]
+
+[node name="DesignPhaseHud" type="CanvasLayer"]
+
+[node name="DesignMenu" type="Control" parent="."]
+layout_mode = 3
+anchor_top = 0.072
+anchor_right = 1.0
+anchor_bottom = 0.433
+offset_top = 0.119999
+offset_bottom = 0.179977
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ActionMenu" type="HBoxContainer" parent="DesignMenu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.259
+anchor_top = -0.2
+anchor_right = 0.866
+offset_left = 0.360001
+offset_right = -127.36
+offset_bottom = 145.0
+theme = ExtResource("2_idhwn")
+
+[node name="Inventory" parent="DesignMenu/ActionMenu" instance=ExtResource("2_rx0p8")]
+layout_mode = 2
+alignment_vertical = 0
+
+[node name="Shop" parent="DesignMenu/ActionMenu" instance=ExtResource("3_53cv6")]
+layout_mode = 2
+alignment_vertical = 0

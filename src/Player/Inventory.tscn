@@ -1,0 +1,54 @@
+[gd_scene load_steps=7 format=3 uid="uid://n4pesnct3co0"]
+
+[ext_resource type="Script" path="res://src/Player/inventory_button.gd" id="1_h544u"]
+[ext_resource type="Theme" uid="uid://c1o0775c62lgb" path="res://src/Player/PopupPanel.tres" id="2_1g5ut"]
+[ext_resource type="Texture2D" uid="uid://dqphob3o0vmq5" path="res://assets/Player/dropup.png" id="4_tcuyy"]
+[ext_resource type="Texture2D" uid="uid://dbpwgnxp0xdbj" path="res://assets/Player/dropdown.png" id="5_yvs2m"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_734gv"]
+
+[sub_resource type="Theme" id="Theme_oepgj"]
+CheckButton/colors/font_outline_color = Color(0, 0, 0, 0)
+CheckButton/icons/checked = ExtResource("4_tcuyy")
+CheckButton/icons/unchecked = ExtResource("5_yvs2m")
+CheckButton/styles/focus = SubResource("StyleBoxEmpty_734gv")
+
+[node name="Inventory" type="AspectRatioContainer"]
+anchors_preset = -1
+anchor_right = 0.331
+anchor_bottom = 0.5
+offset_right = 0.23996
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.0
+script = ExtResource("1_h544u")
+
+[node name="ExpandedPanel" type="Panel" parent="."]
+visible = false
+layout_mode = 2
+theme = ExtResource("2_1g5ut")
+
+[node name="ItemList" type="GridContainer" parent="ExpandedPanel"]
+layout_mode = 2
+offset_left = 1.0
+offset_top = 44.0
+offset_right = 261.0
+offset_bottom = 258.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 6
+
+[node name="CollapsedPanel" type="Panel" parent="."]
+custom_minimum_size = Vector2(0, 40)
+layout_direction = 2
+layout_mode = 2
+size_flags_vertical = 0
+theme = ExtResource("2_1g5ut")
+
+[node name="CheckButton" type="CheckButton" parent="."]
+layout_mode = 2
+size_flags_vertical = 0
+theme = SubResource("Theme_oepgj")
+text = "Inventory"
+
+[connection signal="toggled" from="CheckButton" to="." method="_on_check_button_toggled"]

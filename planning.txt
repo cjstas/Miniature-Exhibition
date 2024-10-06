@@ -1,0 +1,246 @@
+Theme: Tiny Creatures
+
+Concept
+Game where you purchase a variety of creatures to keep in your exhibit. Each creature produces some resources which are used to expand your exhibit (get new creatures, etc)
+New creatures. Player interaction comes from needing to feed, water, & clean the creatures. The goal is to eventually automate this
+	simple top down, retro graphic. Gameplay would focus on controling space balancing ugly functional stuff with pretty creatures.
+		Player would take a section of the space as their final "screenshot" of the exhibit which gives them money (another resource) to buy stuff
+
+Core Loop:
+	Planning:
+		Buy/Sell/Redesign your exhibit
+	Day Start:
+		Visitors will walk through a designated path
+			They will look around and see all the creatures and give you popularity based on creature health
+		Creature health (anything too high, creature dies)
+			Anxiety
+				More people = more anxiety | Lower with entertainment?
+			Clean
+				creature accumulates filth over time during day phase. must be cleaned by player interaction (clicking and holding)
+			Food
+				Drag and supply to creature from inventory (needs to be stocked prior to day. Automation on buying?)
+
+
+Breakdown:
+	Main Scene
+		Player can move around various objects in a grid
+			Click controls only. Drag and drop not a thing
+				This could be a control setting as a stretch
+		UI
+			Shop
+				Creatures
+					Cost resources + money 
+				Food
+					Cost money (more valueable creatures need better foods)
+				Automation items
+					Stretch
+			Inventory
+				Creatures (they can sell creatures they dont want)
+				Cage Upgrades
+					Robo cleaner
+					Auto Collector
+					Feed-o-matic
+					All-in-one
+			Camera
+				Popup that is X by Y size. Attaches to the grid and everything within the grid space is totaled for the final reward
+
+Task Breakdown
+
+Z Index
+	Floor - 0
+	Creatures - 1
+	Visitors - 2
+	Particles - 3
+
+Collision Layers:
+	1 Visitors & Tiles
+	2 Pickup
+
+Tilesets:
+	Floor 
+		0,0 - Empty
+		1,0 - Walking
+		2,0 - Start
+		3,0 - Finish
+		4,0 - Nothing
+	
+selected Action (callable)
+	Action Callable is a function which gets put into the player controls for the on click
+
+What the dudes do when they walk by
+	Trigger Collision on the tileset
+		tileset checks all neighbors for beauty values
+			This gets added to the visitors 
+
+Phase 1:
+	[] Create a Main scene
+		[x] There should be a tilemap with floor tiles and cage tiles
+			[x] Floor
+				[x] Empty
+				[x] Border
+				[x] Walking Path
+				[x] Walking Start
+				[x] Walking Finish
+			[x] Cage
+				[x] Empty Cage
+				[x] Cage with Creature
+		[x] Setup Phase Controls
+			 // [] Place Cage
+			[x] Place creature in cage
+			[x] Remove Cage/Creature
+			[x] Hit button to enter Open Phase
+		[x] Open Phase Controls
+			[x] Select Tools
+				[x] Brush (cleaning)
+				[x] Food (feeding)
+				[x] Hand (collecting)
+		[] Open Phase Mechanics
+			[x] Visitors
+				[x] x visitors visit (based on popularity)
+				[x] Walking Animation
+				[x] Increase beauty based on evaluation from nearby creatures
+					[x] beauty = CreatureValue - health impairment
+				[x] When they reach the finish, they increase/decrease Popularity for next day based on the beauty
+			[x] Should last a specific amount of time (2 minutes?)
+			//[] Once timer goes away and once all visitors leave, a popup should display sumarrizing the day
+				//[] Number of customers
+				//[] Profit
+				//[] Resources gains
+				//[] Creatures dead
+				//[] etc
+
+		[] Change the select tool to give you some stats on the creature?
+
+To Test/Solve:
+	How do visitors detect when they enter a new cell?
+		Option 1:
+			Simple layering. They can be an area or something overlapping tile's bodies 
+		Option 2:
+			They can communicate directly with the floor tilemap to map out a path and just do the calculation manually
+				This will be hard. avoid if possible
+		Option 3:
+	How do visitors know where to pathfind?
+		Option 1 (this is not viable without adding more tiles):
+			Collision on the outside of the paths that keeps them between two fences, and then we just have a spawn point via the tile on the floor, and a goal via the end point
+		Option 2:
+			I manually calculate a path at runtime by attempting to navigate the floor tileset(should not be too hard as long as there are not two neighbors)
+		Option 3:
+			This is setup manually and the path is unconfigurable
+				Levels?
+
+bubblegum breakdown
+	0,0 - Health
+	0,1 - Dirty
+	0,2 - Hungry
+	0,3 - Anxious
+	0,4 - Dirty + Hungry
+	0,5 - Dirty + Anxious
+	0,6 - Hungry + Anxious
+	0,7 - Dirty + Hungry + Anxious
+
+Graphics Needs:
+	[x] Mouse Icons to see what is currently selected
+		Additionally a small animation for when brushing & feeding
+			Brush
+			Food
+			Hand
+			Finger
+			Hand Holding thing
+	[x] Creatures
+		Creature dirty
+		Creature Hungry
+		Creature Anxious
+			Combo
+				Creature dirty + Hungry
+				Creature dirty + Anxious
+				Creature Hungry + Anxious
+				Creature dirty + hungry + anxious
+	[x] Visitors
+		Walking
+			//Happy particles
+			//Angry particles
+		//Money particles on entrance
+		//Popularity particles on exit
+
+Sound Needs: #Skipping Sound alltogether for now
+	Creature Sound
+		On Place. Randomly through the Open Phase
+	Visitor Sounds
+		Happy
+		Angry
+	Planning Phase Background song
+	Open Phase Background song
+
+Phase 2 - Feedback Controls:
+	[] Controls
+		[x] Zoom and Move Camera
+			[x] Scroll
+			[x] WASD 
+				//[] if extra time, drag movement on all actions (maybe middle click)
+		[x] Click + Hold continues to clean. Auto Reset action start
+	[] Visitor Feedback
+		[] Indication of beautiful tile (particle spawner on the visitor object?)
+		[] Indication of ugly tile
+	[x] Creature Feedback
+		[x] More visual clarity of filth, hunger, and anxiety
+			[x] More visual clarity of when you are fixing this (maybe spawn a particle spawner at tile location that kills itself after a burst of particles)
+		[x] Click on creature with general selection tools to show stats
+			[x] This likely should be its own HUD separate from the other two
+	[x] Display core stats on screen somewhere
+	[] Feedback for being unable to place a creature in a spot
+
+Inventory breakdown:
+x	On Grab, set objectInHand to the creatureSet value (don't worry about floor editing rn)
+x	On Grab from Inventory, set objectInhand to the Button's information
+x	On Place, set tilemap at location equal to objectInHand and clear objectInHand
+x	On Right Click (deselect), add objectInHand to inventory
+x	On Removal, add object at tilemap to inventory
+	Check buildCreatureSet() 
+		Fix it?
+			Got rid of it
+	
+	Inventory:
+x		Update inventory clears display inventory
+x			Then it creates new CreatureButtons per creature in inventory
+x				Store data about creature in button
+x					Button onclick does the Inventory stuff on 194
+		
+
+
+Creature stat breakdown:
+	Name: name
+	cleanlieness: clean/maxClean
+	food: food/maxFood
+	stress: anxiety
+	production time: maxProductionTime
+	produced resource: resourcename
+	value: value
+	
+	MoveButton
+	RemoveButton
+	
+	mapPosition
+	globalPosition
+
+Player Stat Breakdown:
+	popularity
+	basic_recoures
+	expectation
+	money
+
+Phase 3 - Final Game necessities:
+	[] Shop & real Limited Inventory
+		[] Limited Inventory
+			[] Start with one BubbleGumStar
+		[] Shop that sells creature and puts it in the inventory
+	[] Creatures Can Die
+	[] Losing
+		[] Set some arbitrary payment plan thing
+			[] Exponential growth necessary
+	[] Path designing (part of the inventory)
+
+Phase 4 - Making the game function
+	[] Automation of tasks being available in shop (checks nearby tiles for creatures and cleans, harvests, etc them)
+	[] Audio Feedback
+	[] UI Improvement
+	[] Setup more types of creatures (or else its just tiny creature)

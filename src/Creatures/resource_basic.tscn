@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://cpkto45kd237b"]
+
+[ext_resource type="Texture2D" uid="uid://dnuv3k3i3n8ev" path="res://assets/creatures/resource_basic.png" id="1_j2cry"]
+
+[sub_resource type="Curve" id="Curve_fxooi"]
+_data = [Vector2(0.384615, 1), 0.0, 0.0, 0, 0, Vector2(0.895105, 0.0674716), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_gbs5d"]
+curve = SubResource("Curve_fxooi")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xo45k"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+angle_min = 1.07288e-05
+angle_max = 360.0
+gravity = Vector3(0, 0, 0)
+radial_accel_min = 30.0
+radial_accel_max = 50.0
+alpha_curve = SubResource("CurveTexture_gbs5d")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8p4m2"]
+size = Vector2(4, 5)
+
+[node name="ResourceBasic" type="Area2D"]
+collision_layer = 2
+collision_mask = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_j2cry")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+amount = 16
+process_material = SubResource("ParticleProcessMaterial_xo45k")
+fixed_fps = 60
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_8p4m2")

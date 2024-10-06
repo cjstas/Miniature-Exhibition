@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://cfl0u1st817ix"]
+
+[ext_resource type="Script" path="res://src/Visitors/visitor_spawner.gd" id="1_8nmpi"]
+[ext_resource type="PackedScene" uid="uid://c3sal0bbr37v4" path="res://src/Visitors/Visitor.tscn" id="2_6ryky"]
+
+[node name="VisitorSpawner" type="Marker2D"]
+script = ExtResource("1_8nmpi")
+Visitor = ExtResource("2_6ryky")

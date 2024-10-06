@@ -1,0 +1,47 @@
+[gd_scene load_steps=8 format=3 uid="uid://cyvrs0qmjxw33"]
+
+[ext_resource type="Script" path="res://src/Player/player.gd" id="1_6dgyj"]
+[ext_resource type="PackedScene" uid="uid://d17ejb8337l3c" path="res://src/Player/DesignPhaseHUD.tscn" id="1_fofdk"]
+[ext_resource type="PackedScene" uid="uid://bad8dhbabuq7t" path="res://src/Player/StatsHUD.tscn" id="2_ivf87"]
+[ext_resource type="PackedScene" uid="uid://b8dfnft3s178r" path="res://src/Player/OpenPhaseHUD.tscn" id="3_dkbwv"]
+[ext_resource type="PackedScene" uid="uid://c413ymv8c05h2" path="res://src/Player/PlayerStats.tscn" id="3_un2fu"]
+[ext_resource type="Script" path="res://src/Player/mouse.gd" id="4_tu2yf"]
+[ext_resource type="Theme" uid="uid://c1o0775c62lgb" path="res://src/Player/PopupPanel.tres" id="6_unsmy"]
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_6dgyj")
+
+[node name="PlayerCamera" type="Camera2D" parent="."]
+offset = Vector2(480, 270)
+
+[node name="HUDs" type="CanvasLayer" parent="."]
+
+[node name="SelectedStats" parent="HUDs" instance=ExtResource("2_ivf87")]
+layer = 3
+
+[node name="Stats" parent="HUDs" instance=ExtResource("3_un2fu")]
+
+[node name="DesignPhaseHud" parent="HUDs" instance=ExtResource("1_fofdk")]
+
+[node name="OpenPhaseHud" parent="HUDs" instance=ExtResource("3_dkbwv")]
+visible = false
+
+[node name="ProgressPhase" type="Button" parent="HUDs"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -86.0
+offset_top = -31.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = ExtResource("6_unsmy")
+text = "Progress"
+
+[node name="Cursor" type="Node2D" parent="."]
+script = ExtResource("4_tu2yf")
+
+[node name="Image" type="Sprite2D" parent="Cursor"]
+
+[connection signal="pressed" from="HUDs/ProgressPhase" to="." method="_on_progress_phase_pressed"]
